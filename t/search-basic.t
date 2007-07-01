@@ -1,5 +1,5 @@
 
-# $Id: search-basic.t,v 1.2 2007/04/21 21:32:45 Daddy Exp $
+# $Id: search-basic.t,v 1.3 2007/07/01 03:18:24 Daddy Exp $
 
 use ExtUtils::testlib;
 use Test::More no_plan;
@@ -22,7 +22,7 @@ diag("Sending bogus query to ask.com...");
 TEST_NOW:
 diag("Sending 1-page query to ask.com...");
 $iDebug = 0;
-$iDump = 1;
+$iDump = 0;
 &tm_run_test('normal', 'oden'.'ized', 1, 9, $iDebug, $iDump);
 # Look at some actual results:
 @ao = $WWW::Search::Test::oSearch->results();
@@ -40,6 +40,7 @@ foreach my $oResult (@ao)
          'result description is not empty');
   } # foreach
 # goto ALL_DONE; # for debugging
+
 diag("Sending multi-page query to ask.com...");
 $iDebug = 0;
 $iDump = 0;

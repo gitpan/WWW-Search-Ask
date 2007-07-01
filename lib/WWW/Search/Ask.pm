@@ -1,4 +1,4 @@
-# $Id: Ask.pm,v 1.3 2007/04/21 21:50:27 Daddy Exp $
+# $Id: Ask.pm,v 1.4 2007/07/01 03:18:07 Daddy Exp $
 
 =head1 NAME
 
@@ -56,7 +56,7 @@ use strict;
 use base 'WWW::Search';
 
 my
-$VERSION = do { my @r = (q$Revision: 1.3 $ =~ /\d+/g); sprintf "%d."."%03d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 1.4 $ =~ /\d+/g); sprintf "%d."."%03d" x $#r, @r };
 my $MAINTAINER = 'Martin Thurn <mthurn@cpan.org>';
 
 use Carp;
@@ -132,14 +132,14 @@ sub parse_tree
   my $hits_found = 0;
   if (! $self->approximate_result_count)
     {
-    my $oTITLE = $oTree->look_down('_tag' => 'td',
-                                   class => 'TBG3',
+    my $oTITLE = $oTree->look_down('_tag' => 'span',
+                                   id => 'pspan',
                                   );
     if (ref $oTITLE)
       {
       my $sRC = $oTITLE->as_text;
       print STDERR " +   RC == $sRC\n" if 2 <= $self->{_debug};
-      if ($sRC =~ m!\sSHOWING\sRESULTS\s+\d+\s*-\s*\d+\s+OF\s+(?:ABOUT\s+)?([0-9,]+)\s!i)
+      if ($sRC =~ m!SHOWING(?:\sRESULTS)?\s+\d+\s*-\s*\d+\s+OF\s+(?:ABOUT\s+)?([0-9,]+)!i)
         {
         my $sCount = $1;
         print STDERR " +     raw    count == $sCount\n" if 3 <= $self->{_debug};
@@ -153,21 +153,21 @@ sub parse_tree
   my $sSize = '';
   my $sDate = '';
   my @aoDIV = $oTree->look_down('_tag' => 'div',
-                                'class' => 'prel',
+                                'class' => 'T1',
                                );
  DIV_TAG:
-  foreach my $oDIV (@aoDIV)
+  foreach my $oDIVdesc (@aoDIV)
     {
+    next DIV_TAG unless ref $oDIVdesc;
+    my $sDesc = $oDIVdesc->as_text;
+    print STDERR " +   found desc ===$sDesc===\n" if 2 <= $self->{_debug};
+    my $oDIV = $oDIVdesc->left;
     next DIV_TAG unless ref $oDIV;
     my $oAtitle = $oDIV->look_down(_tag => 'a',
                                    class => 'L4');
     next DIV_TAG unless ref $oAtitle;
     my $sTitle = $oAtitle->as_text;
     my $sURL = $oAtitle->attr('href');
-    my $oDIVdesc = $oDIV->right;
-    next DIV_TAG unless ref $oDIVdesc;
-    my $sDesc = $oDIVdesc->as_text;
-    print STDERR " +   found desc ===$sDesc===\n" if 2 <= $self->{_debug};
     my $hit = new WWW::Search::Result;
     $hit->add_url($sURL);
     $hit->title($sTitle);
@@ -179,7 +179,7 @@ sub parse_tree
 SKIP_RESULTS_LIST:
   # Find the next link, if any:
   my @aoAnext = $oTree->look_down('_tag' => 'a',
-                                  class => 'L14');
+                                  class => 'L7');
   my $oAnext = pop(@aoAnext);
   if (ref $oAnext)
     {
