@@ -23,7 +23,7 @@ TEST_NOW:
 diag("Sending 1-page query to ask.com...");
 $iDebug = 0;
 $iDump = 0;
-&tm_run_test('normal', 'oden'.'ized', 1, 9, $iDebug, $iDump);
+&tm_run_test('normal', 'oden'.'ization', 1, 9, $iDebug, $iDump);
 # Look at some actual results:
 @ao = $WWW::Search::Test::oSearch->results();
 cmp_ok(0, '<', scalar(@ao), 'got any results');

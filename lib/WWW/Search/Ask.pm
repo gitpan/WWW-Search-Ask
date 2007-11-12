@@ -1,4 +1,4 @@
-# $Id: Ask.pm,v 1.4 2007/07/01 03:18:07 Daddy Exp $
+# $Id: Ask.pm,v 1.5 2007/11/12 01:06:57 Daddy Exp $
 
 =head1 NAME
 
@@ -52,11 +52,12 @@ MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 package WWW::Search::Ask;
 
 use strict;
+use warnings;
 
 use base 'WWW::Search';
 
 my
-$VERSION = do { my @r = (q$Revision: 1.4 $ =~ /\d+/g); sprintf "%d."."%03d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 1.5 $ =~ /\d+/g); sprintf "%d."."%03d" x $#r, @r };
 my $MAINTAINER = 'Martin Thurn <mthurn@cpan.org>';
 
 use Carp;
