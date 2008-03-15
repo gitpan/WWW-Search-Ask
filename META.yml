@@ -3,6 +3,8 @@ author:
   - Martin Thurn <mthurn@cpan.org>
 build_requires: 
   Test::More: 0
+  Test::Pod: 0
+  Test::Pod::Coverage: 0
 distribution_type: module
 generated_by: Module::Install version 0.68
 license: perl
@@ -18,4 +20,4 @@ requires:
   Carp: 0
   WWW::Search: 0
   perl: 5.004
-version: 1.005
+version: 1.006

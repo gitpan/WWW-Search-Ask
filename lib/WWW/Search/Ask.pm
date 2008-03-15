@@ -1,4 +1,4 @@
-# $Id: Ask.pm,v 1.5 2007/11/12 01:06:57 Daddy Exp $
+# $Id: Ask.pm,v 1.6 2008/03/15 16:09:07 Daddy Exp $
 
 =head1 NAME
 
@@ -26,24 +26,13 @@ be done through L<WWW::Search> objects.
 The query is applied as "ALL these words"
 (i.e. boolean AND of all the query terms)
 
-=head1 SEE ALSO
+=head1 PRIVATE METHODS
 
-To make new back-ends, see L<WWW::Search>.
+In order to use this module,
+you do NOT need to know about these methods;
+they are just part of the underlying WWW::Search mechanism.
 
-=head1 BUGS
-
-Please tell the author if you find any!
-
-=head1 AUTHOR
-
-C<WWW::Search::Ask> was originally written by Martin Thurn,
-based loosely on the code for C<WWW::Search::Search>.
-
-=head1 LEGALESE
-
-THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
-WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+=over
 
 =cut
 
@@ -57,12 +46,18 @@ use warnings;
 use base 'WWW::Search';
 
 my
-$VERSION = do { my @r = (q$Revision: 1.5 $ =~ /\d+/g); sprintf "%d."."%03d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 1.6 $ =~ /\d+/g); sprintf "%d."."%03d" x $#r, @r };
 my $MAINTAINER = 'Martin Thurn <mthurn@cpan.org>';
 
 use Carp;
 use WWW::Search;
 use WWW::Search::Result;
+
+=item gui_query
+
+In WWW::Search::Ask, the default query is the same as the GUI query.
+
+=cut
 
 sub gui_query
   {
@@ -70,6 +65,10 @@ sub gui_query
   return $self->native_query(@_);
   } # gui_query
 
+
+=item native_setup_search
+
+=cut
 
 sub native_setup_search
   {
@@ -117,7 +116,7 @@ sub native_setup_search
   } # native_setup_search
 
 
-sub preprocess_results_page_OFF
+sub _preprocess_results_page_OFF
   {
   my $self = shift;
   my $sPage = shift;
@@ -125,6 +124,10 @@ sub preprocess_results_page_OFF
   return $sPage;
   } # preprocess_results_page
 
+
+=item parse_tree
+
+=cut
 
 sub parse_tree
   {
@@ -134,7 +137,7 @@ sub parse_tree
   if (! $self->approximate_result_count)
     {
     my $oTITLE = $oTree->look_down('_tag' => 'span',
-                                   id => 'pspan',
+                                   class => 'T7',
                                   );
     if (ref $oTITLE)
       {
@@ -197,6 +200,10 @@ SKIP_RESULTS_LIST:
   } # parse_tree
 
 
+=item strip
+
+=cut
+
 sub strip
   {
   my $sRaw = shift;
@@ -211,3 +218,26 @@ sub strip
 1;
 
 __END__
+
+=back
+
+=head1 SEE ALSO
+
+To make new back-ends, see L<WWW::Search>.
+
+=head1 BUGS
+
+Please tell the author if you find any!
+
+=head1 AUTHOR
+
+C<WWW::Search::Ask> was originally written by Martin Thurn,
+based loosely on the code for C<WWW::Search::Search>.
+
+=head1 LEGALESE
+
+THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+=cut

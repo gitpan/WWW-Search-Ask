@@ -1,5 +1,5 @@
 
-# $Id: search-basic.t,v 1.3 2007/07/01 03:18:24 Daddy Exp $
+# $Id: search-basic.t,v 1.4 2008/03/15 16:09:36 Daddy Exp $
 
 use ExtUtils::testlib;
 use Test::More no_plan;
@@ -23,7 +23,7 @@ TEST_NOW:
 diag("Sending 1-page query to ask.com...");
 $iDebug = 0;
 $iDump = 0;
-&tm_run_test('normal', 'oden'.'ization', 1, 9, $iDebug, $iDump);
+&tm_run_test('normal', 'wiz'.'arrdry', 1, 9, $iDebug, $iDump);
 # Look at some actual results:
 @ao = $WWW::Search::Test::oSearch->results();
 cmp_ok(0, '<', scalar(@ao), 'got any results');
