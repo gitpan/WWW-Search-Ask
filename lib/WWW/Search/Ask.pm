@@ -1,4 +1,4 @@
-# $Id: Ask.pm,v 1.6 2008/03/15 16:09:07 Daddy Exp $
+# $Id: Ask.pm,v 1.7 2008/06/01 13:20:56 Martin Exp $
 
 =head1 NAME
 
@@ -46,7 +46,7 @@ use warnings;
 use base 'WWW::Search';
 
 my
-$VERSION = do { my @r = (q$Revision: 1.6 $ =~ /\d+/g); sprintf "%d."."%03d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 1.7 $ =~ /\d+/g); sprintf "%d."."%03d" x $#r, @r };
 my $MAINTAINER = 'Martin Thurn <mthurn@cpan.org>';
 
 use Carp;
@@ -66,11 +66,7 @@ sub gui_query
   } # gui_query
 
 
-=item native_setup_search
-
-=cut
-
-sub native_setup_search
+sub _native_setup_search
   {
   my ($self, $native_query, $native_options_ref) = @_;
   $self->{_debug} = $native_options_ref->{'search_debug'};
@@ -113,7 +109,7 @@ sub native_setup_search
     } # if
   # Finally figure out the url.
   $self->{_next_url} = $self->{_options}{'search_url'} .'?'. $self->hash_to_cgi_string($self->{_options});
-  } # native_setup_search
+  } # _native_setup_search
 
 
 sub _preprocess_results_page_OFF
@@ -125,18 +121,15 @@ sub _preprocess_results_page_OFF
   } # preprocess_results_page
 
 
-=item parse_tree
-
-=cut
-
-sub parse_tree
+sub _parse_tree
   {
   my $self = shift;
   my $oTree = shift;
   my $hits_found = 0;
   if (! $self->approximate_result_count)
     {
-    my $oTITLE = $oTree->look_down('_tag' => 'span',
+    print STDERR " DDD   look for RC...\n" if 2 <= $self->{_debug};
+    my $oTITLE = $oTree->look_down(_tag => 'span',
                                    class => 'T7',
                                   );
     if (ref $oTITLE)
@@ -197,7 +190,7 @@ SKIP_RESULTS_LIST:
     } # if
  SKIP_NEXT_LINK:
   return $hits_found;
-  } # parse_tree
+  } # _parse_tree
 
 
 =item strip

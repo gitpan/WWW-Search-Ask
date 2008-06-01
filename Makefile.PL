@@ -1,4 +1,5 @@
-# $Id: Makefile.PL,v 1.4 2008/03/15 16:10:11 Daddy Exp $
+
+# $Id: Makefile.PL,v 1.5 2008/06/01 13:14:33 Martin Exp $
 
 use inc::Module::Install;
 
@@ -10,13 +11,10 @@ license('perl');
 requires('perl' => 5.004);
 requires('Carp');
 requires('WWW::Search');
-build_requires('Test::More');
-build_recommends('Test::Pod');
-build_recommends('Test::Pod::Coverage');
+test_requires('Test::More');
+test_recommends('Test::Pod');
+test_recommends('Test::Pod::Coverage');
 
 WriteAll;
 
-1;
-
 __END__
-
