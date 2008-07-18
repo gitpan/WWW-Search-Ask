@@ -1,4 +1,4 @@
-# $Id: Ask.pm,v 1.7 2008/06/01 13:20:56 Martin Exp $
+# $Id: Ask.pm,v 1.9 2008/07/18 01:20:29 Martin Exp $
 
 =head1 NAME
 
@@ -46,7 +46,7 @@ use warnings;
 use base 'WWW::Search';
 
 my
-$VERSION = do { my @r = (q$Revision: 1.7 $ =~ /\d+/g); sprintf "%d."."%03d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 1.9 $ =~ /\d+/g); sprintf "%d."."%03d" x $#r, @r };
 my $MAINTAINER = 'Martin Thurn <mthurn@cpan.org>';
 
 use Carp;
@@ -129,7 +129,7 @@ sub _parse_tree
   if (! $self->approximate_result_count)
     {
     print STDERR " DDD   look for RC...\n" if 2 <= $self->{_debug};
-    my $oTITLE = $oTree->look_down(_tag => 'span',
+    my $oTITLE = $oTree->look_down(_tag => 'div',
                                    class => 'T7',
                                   );
     if (ref $oTITLE)
@@ -227,10 +227,8 @@ Please tell the author if you find any!
 C<WWW::Search::Ask> was originally written by Martin Thurn,
 based loosely on the code for C<WWW::Search::Search>.
 
-=head1 LEGALESE
+=head1 LICENSE
 
-THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
-WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+This software is released under the same license as Perl itself.
 
 =cut

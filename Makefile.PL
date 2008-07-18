@@ -1,12 +1,9 @@
 
-# $Id: Makefile.PL,v 1.5 2008/06/01 13:14:33 Martin Exp $
+# $Id: Makefile.PL,v 1.6 2008/07/18 01:20:57 Martin Exp $
 
 use inc::Module::Install;
 
-name('WWW-Search-Ask');
-version_from('lib/WWW/Search/Ask.pm');
-author('Martin Thurn <mthurn@cpan.org>');
-license('perl');
+all_from('lib/WWW/Search/Ask.pm');
 
 requires('perl' => 5.004);
 requires('Carp');

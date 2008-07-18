@@ -1,16 +1,18 @@
 ---
+abstract: 'class for searching www.search.com'
 author:
-  - 'Martin Thurn <mthurn@cpan.org>'
+  - 'C<WWW::Search::Ask> was originally written by Martin Thurn,'
 build_requires:
   Test::More: 0
   Test::Pod: 0
   Test::Pod::Coverage: 0
 distribution_type: module
-generated_by: 'Module::Install version 0.73'
+generated_by: 'Module::Install version 0.75'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.3.html
   version: 1.3
+module_name: WWW::Search::Ask
 name: WWW-Search-Ask
 no_index:
   directory:
@@ -20,4 +22,4 @@ requires:
   Carp: 0
   WWW::Search: 0
   perl: 5.004
-version: 1.007
+version: 1.009
