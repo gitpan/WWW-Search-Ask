@@ -1,4 +1,4 @@
-# $Id: Ask.pm,v 1.9 2008/07/18 01:20:29 Martin Exp $
+# $Id: Ask.pm,v 1.11 2008/11/30 01:38:15 Martin Exp $
 
 =head1 NAME
 
@@ -46,7 +46,7 @@ use warnings;
 use base 'WWW::Search';
 
 my
-$VERSION = do { my @r = (q$Revision: 1.9 $ =~ /\d+/g); sprintf "%d."."%03d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 1.11 $ =~ /\d+/g); sprintf "%d."."%03d" x $#r, @r };
 my $MAINTAINER = 'Martin Thurn <mthurn@cpan.org>';
 
 use Carp;
@@ -176,18 +176,23 @@ sub _parse_tree
 SKIP_RESULTS_LIST:
   # Find the next link, if any:
   my @aoAnext = $oTree->look_down('_tag' => 'a',
-                                  class => 'L7');
-  my $oAnext = pop(@aoAnext);
-  if (ref $oAnext)
+                                  # class => 'L7',
+                                 );
+ NEXT_LINK:
+  while (my $oAnext = pop(@aoAnext))
     {
-    my $s = $oAnext->as_text;
-    print STDERR " +   oAnext is ===$s===\n" if 2 <= $self->{_debug};
-    if ($s =~ m!\ANext!)
+    if (ref $oAnext)
       {
-      $self->{_next_url} = $self->absurl($self->{'_prev_url'},
-                                         $oAnext->attr('href'));
+      my $s = $oAnext->as_text;
+      print STDERR " +   oAnext is ===$s===\n" if 2 <= $self->{_debug};
+      if ($s =~ m!\ANext!)
+        {
+        $self->{_next_url} = $self->absurl($self->{'_prev_url'},
+                                           $oAnext->attr('href'));
+        last NEXT_LINK;
+        } # if
       } # if
-    } # if
+    } # while
  SKIP_NEXT_LINK:
   return $hits_found;
   } # _parse_tree
@@ -224,7 +229,7 @@ Please tell the author if you find any!
 
 =head1 AUTHOR
 
-C<WWW::Search::Ask> was originally written by Martin Thurn,
+Originally written by Martin Thurn,
 based loosely on the code for C<WWW::Search::Search>.
 
 =head1 LICENSE
